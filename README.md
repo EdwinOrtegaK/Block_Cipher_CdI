@@ -52,16 +52,31 @@ python -m src.des_cipher
 python -m src.tripledes_cipher
 ```
 
-### Generar imágenes AES (ECB vs CBC)
+### Ejecutar experimento completo de seguridad (consola)
+
+```bash
+python -m scripts.security_experiments
+```
+
+Este script muestra:
+
+- tamanos de clave para DES, 3DES y AES
+- padding PKCS#7 manual para 5, 8 y 10 bytes
+- vulnerabilidad de ECB con bloques repetidos
+- experimento de IV en CBC (mismo IV vs IVs distintos)
+
+### Generar imagenes AES-ECB vs AES-CBC
 
 ```bash
 python -m scripts.generate_images
 ```
 
-### Experimentos de seguridad
+Salida esperada (ejemplo):
 
-```bash
-python -m scripts.security_experiments
+```text
+=== Imagenes generadas ===
+Key (hex): <32 bytes en hex>
+IV  (hex): <16 bytes en hex>
 ```
 
 ### Ejecutar pruebas
@@ -70,6 +85,46 @@ python -m scripts.security_experiments
 pytest -q
 ```
 
+Resultado obtenido:
+
+```text
+30 passed in 0.29s
+```
+
+## Demostración Visual: AES ECB vs CBC
+
+| Original | AES-ECB | AES-CBC |
+|---|---|---|
+| ![Original](images/original.png) | ![AES ECB](images/aes_ecb.png) | ![AES CBC](images/aes_cbc.png) |
+
+Observacion:
+
+- En ECB se conservan patrones estructurales visibles.
+- En CBC la salida luce aleatoria y no preserva esos patrones.
+
+## Proceso de testing
+
+Se uso `pytest` sobre `test/test_ciphers.py`.
+
+Cobertura funcional actual:
+
+- round-trip de DES ECB
+- validacion de longitudes invalidas de clave y ciphertext en DES
+- round-trip de 3DES CBC con claves de 16 y 24 bytes
+- validacion de IV invalido y clave invalida en 3DES
+- verificacion de que IV distinto produce ciphertext distinto en CBC
+
+Comando:
+
+```bash
+pytest -q
+```
+
+Resultado:
+
+```text
+30 passed in 0.29s
+```
 
 ## Respuestas Parte 2 – Análisis de Seguridad
 
