@@ -1,6 +1,5 @@
 # Ejercicio Block – Cifrados de Información
 
-
 ## Descripción
 
 Este laboratorio implementa y analiza algoritmos de cifrado de bloque:
@@ -17,7 +16,7 @@ Incluye pruebas unitarias, experimentos de seguridad y comparación visual entre
 pip install -r requirements.txt
 ```
 
-### Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 src/
